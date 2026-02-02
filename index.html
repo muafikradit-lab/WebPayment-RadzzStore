@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran - Raditya Akhsanul</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .payment-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .payment-card {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 350px;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .payment-header {
+            padding: 25px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .dana-header {
+            background: linear-gradient(to right, #00a3e0, #0082c8);
+        }
+
+        .gopay-header {
+            background: linear-gradient(to right, #00aa13, #008c10);
+        }
+
+        .payment-icon {
+            font-size: 2.5rem;
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-title h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .payment-title p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .payment-body {
+            padding: 30px;
+        }
+
+        .payment-info {
+            margin-bottom: 25px;
+        }
+
+        .info-item {
+            margin-bottom: 15px;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            background-color: #f5f7fa;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 2px dashed #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-btn {
+            background-color: #e9ecef;
+            border: none;
+            color: #6a11cb;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .copy-btn:hover {
+            background-color: #dde1e7;
+        }
+
+        .instructions {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .instructions h3 {
+            color: #333;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 1000;
+            font-weight: 500;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .payment-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .payment-card {
+                width: 100%;
+            }
+            
+            .notification {
+                left: 20px;
+                right: 20px;
+                top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Pembayaran Online</h1>
+            <p>Silakan pilih metode pembayaran di bawah ini. Salin nomor rekening/dompet digital untuk melakukan transfer.</p>
+        </div>
+
+        <div class="payment-container">
+            <!-- Kartu Dana -->
+            <div class="payment-card">
+                <div class="payment-header dana-header">
+                    <div class="payment-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="payment-title">
+                        <h2>DANA</h2>
+                        <p>Dompet Digital Indonesia</p>
+                    </div>
+                </div>
+                <div class="payment-body">
+                    <div class="payment-info">
+                        <div class="info-item">
+                            <div class="info-label">Nomor DANA</div>
+                            <div class="info-value">
+                                <span id="dana-number">088216179137</span>
+                                <button class="copy-btn" data-number="088216179137">
+                                    <i class="fas fa-copy"></i> Salin
+                                </button>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Atas Nama</div>
+                            <div class="info-value">
+                                <span>Raditya Akhsanul</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="instructions">
+                        <h3><i class="fas fa-info-circle"></i> Cara Pembayaran via DANA</h3>
+                        <ol>
+                            <li>Buka aplikasi DANA di ponsel Anda</li>
+                            <li>Pilih menu "Kirim" atau "Transfer"</li>
+                            <li>Masukkan nomor DANA di atas</li>
+                            <li>Masukkan jumlah pembayaran</li>
+                            <li>Konfirmasi dan selesaikan transaksi</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kartu Gopay -->
+            <div class="payment-card">
+                <div class="payment-header gopay-header">
+                    <div class="payment-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <div class="payment-title">
+                        <h2>GOPAY</h2>
+                        <p>Dompet Digital Gojek</p>
+                    </div>
+                </div>
+                <div class="payment-body">
+                    <div class="payment-info">
+                        <div class="info-item">
+                            <div class="info-label">Nomor GOPAY</div>
+                            <div class="info-value">
+                                <span id="gopay-number">0882003850763</span>
+                                <button class="copy-btn" data-number="0882003850763">
+                                    <i class="fas fa-copy"></i> Salin
+                                </button>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Atas Nama</div>
+                            <div class="info-value">
+                                <span>RadzzStore</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="instructions">
+                        <h3><i class="fas fa-info-circle"></i> Cara Pembayaran via GOPAY</h3>
+                        <ol>
+                            <li>Buka aplikasi Gojek di ponsel Anda</li>
+                            <li>Pilih menu "Bayar" atau "GOPAY"</li>
+                            <li>Pilih "Transfer ke Sesama GOPAY"</li>
+                            <li>Masukkan nomor GOPAY di atas</li>
+                            <li>Masukkan jumlah dan konfirmasi pembayaran</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2023 Raditya Akhsanul • Pastikan data pembayaran sesuai sebelum melakukan transaksi</p>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        Nomor berhasil disalin ke clipboard!
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            const notification = document.getElementById('notification');
+            
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const number = this.getAttribute('data-number');
+                    
+                    // Copy nomor ke clipboard
+                    navigator.clipboard.writeText(number).then(() => {
+                        // Tampilkan notifikasi
+                        notification.classList.add('show');
+                        
+                        // Sembunyikan notifikasi setelah 3 detik
+                        setTimeout(() => {
+                            notification.classList.remove('show');
+                        }, 3000);
+                        
+                        // Efek visual tombol
+                        const originalText = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+                        this.style.backgroundColor = '#4CAF50';
+                        this.style.color = 'white';
+                        
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                            this.style.backgroundColor = '';
+                            this.style.color = '';
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Gagal menyalin: ', err);
+                        alert('Gagal menyalin nomor. Silakan salin manual.');
+                    });
+                });
+            });
+            
+            // Efek hover untuk kartu pembayaran
+            const paymentCards = document.querySelectorAll('.payment-card');
+            paymentCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
